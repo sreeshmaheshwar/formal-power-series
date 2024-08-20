@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <cstdint>
 #include <initializer_list>
 #include <type_traits>
 #include <vector>
@@ -163,5 +164,23 @@ public:
                 .take(next_size);
     }
     return res;
+  }
+
+  /// Returns the first `size` terms of the formal power series that is this
+  /// formal power series raised to the power of `k`, where `k` is a
+  /// non-negative integer, using binary exponentiation in O(C(size) * log K),
+  /// where C(N) is the time complexity of convolution.
+  constexpr FormalPowerSeries bin_pow(std::uint64_t k, size_t size) const {
+    FormalPowerSeries result(size);
+    result[0] = ModInt(1);
+    FormalPowerSeries power = this->take(size);
+    while (k > 0) {
+      if (k & 1) {
+        result = (result * power).take(size);
+      }
+      power = (power * power).take(size);
+      k >>= 1;
+    }
+    return result;
   }
 };
