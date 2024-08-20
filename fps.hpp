@@ -83,6 +83,27 @@ public:
     return result;
   }
 
+  /// Returns the derivative of this formal power series.
+  constexpr FormalPowerSeries derivative() const {
+    if (this->empty()) {
+      return *this;
+    }
+    FormalPowerSeries result(this->size() - 1);
+    for (size_t i = 1; i < this->size(); ++i) {
+      result[i - 1] = (*this)[i] * ModInt(i);
+    }
+    return result;
+  }
+
+  /// Returns the anti-derivative of this formal power series.
+  constexpr FormalPowerSeries antiderivative() const {
+    FormalPowerSeries result(this->size() + 1);
+    for (size_t i = 1; i < result.size(); ++i) {
+      result[i] = (*this)[i - 1] / ModInt(i);
+    }
+    return result;
+  }
+
   /// Returns the first `size` terms of the formal power series that is the
   /// multiplicative inverse of this formal power series.
   constexpr FormalPowerSeries inverse(size_t size) const {
