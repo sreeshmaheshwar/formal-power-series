@@ -105,4 +105,27 @@ public:
     }
     return res;
   }
+  /// Returns the first `size` terms of the formal power series that is e raised
+  /// to the power of this formal power series.
+  constexpr FormalPowerSeries exp(size_t size) const {
+    assert(!this->empty() && this->front() == ModInt(0));
+    // Newton's Method: Q_{k+1} = Q_k - F(Q_k) / F'(Q_k) (mod x^{2^{k+1}}).
+    //
+    // Since Q(x), the true exponential, satisfies Q(x) = e^{P(x)} and so P(x)
+    // = ln Q(x), we take F(Q) = ln(Q) - P = 0.
+    //
+    // Thus, F'(Q) = 1 / Q, and the Newton iteration becomes Q_{k+1} = Q_k * (1
+    // + P - ln(Q_k)) (mod x^{2^{k+1}}).
+    //
+    // Since the exponential series has a constant term of 1, we take the
+    // initial Q_0 to be 1.
+    FormalPowerSeries res = {ModInt(1)};
+    while (res.size() != size) {
+      const auto next_size = std::min(res.size() * 2, size);
+      res =
+          (res * (FormalPowerSeries{1} + take(next_size) - res.log(next_size)))
+              .take(next_size);
+    }
+    return res;
+  }
 };
