@@ -10,6 +10,11 @@ concept ConvolutionFunction = requires(F f, const std::vector<T> &a,
   { f(a, b) } -> std::same_as<std::vector<T>>;
 };
 
+/// Formal Power Series operations that rely on a provided convolution function
+/// to multiply polynomials. A polynomial of degree n is represented as a
+/// std::vector of coefficients of size (n + 1), where the i-th element is the
+/// coefficient of x^i. For example, {1, 2, 0, 4} represents the polynomial 1 +
+/// 2x + 4x^3.
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 class FormalPowerSeries : public std::vector<ModInt> {
 public:
