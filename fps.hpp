@@ -124,8 +124,9 @@ public:
     // Thus, F'(Q) = -1 / Q^2, and the Newton iteration becomes Q_{k+1} = Q_k *
     // (2 - P * Q_k) (mod x^{2^{k+1}}).
     //
-    // We take the multiplicative inverse of the constant term of P(x) as the
-    // initial Q_0.
+    // As we assert a non-zero constant term of P(x), we can take the
+    // multiplicative inverse of the constant term of P(x) as the initial Q_0
+    // since it is the constant term of P(x)^{-1}.
     FormalPowerSeries res = {ModInt(1) / this->front()};
     while (res.size() != size) {
       const auto next_size = std::min(res.size() * 2, size);
@@ -147,8 +148,8 @@ public:
     // Thus, F'(Q) = 1 / Q, and the Newton iteration becomes Q_{k+1} = Q_k * (1
     // + P - ln(Q_k)) (mod x^{2^{k+1}}).
     //
-    // Since the exponential series has a constant term of 1, we take the
-    // initial Q_0 to be 1.
+    // As we assert a zero constant term of P(x), we can take 1 as the initial
+    // Q_0 since it is the constant term of e^{P(x)}.
     FormalPowerSeries res = {ModInt(1)};
     while (res.size() != size) {
       const auto next_size = std::min(res.size() * 2, size);
