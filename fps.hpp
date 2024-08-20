@@ -105,6 +105,14 @@ public:
   }
 
   /// Returns the first `size` terms of the formal power series that is the
+  /// natural logarithm of this formal power series.
+  constexpr FormalPowerSeries log(size_t size) const {
+    assert(!this->empty() && this->front() == ModInt(1));
+    // d/dx (ln P(x)) = P'(x) / P(x).
+    return (derivative() * inverse(size)).antiderivative().take(size);
+  }
+
+  /// Returns the first `size` terms of the formal power series that is the
   /// multiplicative inverse of this formal power series.
   constexpr FormalPowerSeries inverse(size_t size) const {
     assert(!this->empty() && this->front() != ModInt(0));
