@@ -135,7 +135,7 @@ public:
     FormalPowerSeries res = {ModInt(1) / this->front()};
     while (res.size() != size) {
       const auto next_size = std::min(res.size() * 2, size);
-      res = (res * (FormalPowerSeries{2} - take(next_size) * res))
+      res = (res * (FormalPowerSeries{ModInt(2)} - take(next_size) * res))
                 .take(next_size);
     }
     return res;
@@ -158,9 +158,9 @@ public:
     FormalPowerSeries res = {ModInt(1)};
     while (res.size() != size) {
       const auto next_size = std::min(res.size() * 2, size);
-      res =
-          (res * (FormalPowerSeries{1} + take(next_size) - res.log(next_size)))
-              .take(next_size);
+      res = (res * (FormalPowerSeries{ModInt(1)} + take(next_size) -
+                    res.log(next_size)))
+                .take(next_size);
     }
     return res;
   }
