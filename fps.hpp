@@ -75,6 +75,8 @@ public:
     return result;
   }
 
+  /// Returns the formal power series consisting of the first `size` terms of
+  /// this formal power series.
   constexpr FormalPowerSeries take(size_t size) const {
     FormalPowerSeries result(*this);
     result.resize(size);
