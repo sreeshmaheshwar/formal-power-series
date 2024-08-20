@@ -83,8 +83,20 @@ public:
     return result;
   }
 
+  /// Returns the first `size` terms of the formal power series that is the
+  /// multiplicative inverse of this formal power series.
   constexpr FormalPowerSeries inverse(size_t size) const {
     assert(!this->empty() && this->front() != ModInt(0));
+    // Newton's Method: Q_{k+1} = Q_k - F(Q_k) / F'(Q_k) (mod x^{2^{k+1}}).
+    //
+    // Since Q(x), the true inverse of our formal power series P(x), satisfies
+    // Q(x) = 1 / P(x) and so P(x) = 1 / Q(x), we take F(Q) = 1 / Q - P = 0.
+    //
+    // Thus, F'(Q) = -1 / Q^2, and the Newton iteration becomes Q_{k+1} = Q_k *
+    // (2 - P * Q_k) (mod x^{2^{k+1}}).
+    //
+    // We take the multiplicative inverse of the constant term of P(x) as the
+    // initial Q_0.
     FormalPowerSeries res = {ModInt(1) / this->front()};
     while (res.size() != size) {
       const auto next_size = std::min(res.size() * 2, size);
