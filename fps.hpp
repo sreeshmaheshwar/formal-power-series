@@ -105,6 +105,7 @@ public:
     }
     return res;
   }
+
   /// Returns the first `size` terms of the formal power series that is e raised
   /// to the power of this formal power series.
   constexpr FormalPowerSeries exp(size_t size) const {
