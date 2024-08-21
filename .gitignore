@@ -1,0 +1,12 @@
+# Executables:
+*.out
+
+# Object files:
+*.o
+
+# Bundled source files:
+combined.cpp
+
+# Precompiled headers:
+*.gch
+*.pch
