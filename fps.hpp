@@ -156,7 +156,7 @@ public:
       res = (res * (FormalPowerSeries{ModInt(2)} - take(next_size) * res))
                 .take(next_size);
     }
-    return res;
+    return size ? res : FormalPowerSeries();
   }
 
   /// Returns the first `size` terms of the formal power series that is e raised
@@ -180,7 +180,7 @@ public:
                     res.log(next_size)))
                 .take(next_size);
     }
-    return res;
+    return size ? res : FormalPowerSeries();
   }
 
   /// Returns the first `size` terms of the formal power series that is this
@@ -251,7 +251,9 @@ public:
 
   /// Returns the first `size` terms of the formal power series P(x) = 1.
   static constexpr FormalPowerSeries mult_identity(size_t size) {
-    assert(size > 0);
+    if (!size) {
+      return {};
+    }
     FormalPowerSeries result(size);
     result[0] = ModInt(1);
     return result;
