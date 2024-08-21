@@ -156,7 +156,7 @@ public:
       res = (res * (FormalPowerSeries{ModInt(2)} - take(next_size) * res))
                 .take(next_size);
     }
-    return size ? res : FormalPowerSeries();
+    return res;
   }
 
   /// Returns the first `size` terms of the formal power series that is e raised
@@ -180,7 +180,7 @@ public:
                     res.log(next_size)))
                 .take(next_size);
     }
-    return size ? res : FormalPowerSeries();
+    return res;
   }
 
   /// Returns the first `size` terms of the formal power series that is this
