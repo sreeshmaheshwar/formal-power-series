@@ -251,6 +251,7 @@ public:
 
   /// Returns the first `size` terms of the formal power series P(x) = 1.
   static constexpr FormalPowerSeries mult_identity(size_t size) {
+    assert(size > 0);
     FormalPowerSeries result(size);
     result[0] = ModInt(1);
     return result;
