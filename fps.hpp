@@ -13,7 +13,7 @@ concept ConvolutionFunction = requires(F f, const std::vector<T> &a,
 
 /// Formal Power Series operations that rely on a provided convolution function
 /// to multiply polynomials. A polynomial of degree n is represented as a
-/// std::vector of coefficients of size (n + 1), where the i-th element is the
+/// std::vector of coefficients of size (n + 1) whose i-th element is the
 /// coefficient of x^i. For example, {1, 2, 0, 4} represents the polynomial 1 +
 /// 2x + 4x^3.
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
@@ -210,10 +210,10 @@ public:
     }
     // As our answer has a factor of x^{ik}, its first i * k coefficients are
     // zero. We can therefore exit early if i * k >= size.
-    if (i == this->size() /* <-> P(x) = 0 */ ||
-        i >= (size + k - 1) / k /* <-> i * k >= size */) {
+    if (i == this->size() /* <-> P(x) is 0 */ || i > size / k ||
+        (i == size / k && size % k != 0)) { // Avoid overflow.
       return FormalPowerSeries(size);
-    } // i * k < size.
+    } // i * k < size holds.
 
     const auto a = (*this)[i];
     // Q(x) = (P(x) / a) / x^i. Note that dividing by x^i is a left shift.
