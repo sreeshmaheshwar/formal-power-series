@@ -49,6 +49,23 @@ public:
   constexpr FormalPowerSeries &
   operator=(FormalPowerSeries &&) noexcept = default;
 
+  constexpr FormalPowerSeries operator*=(const ModInt &scalar) {
+    for (auto &x : *this) {
+      x *= scalar;
+    }
+    return *this;
+  }
+
+  constexpr friend FormalPowerSeries operator*(const FormalPowerSeries &fps,
+                                               const ModInt &scalar) {
+    return FormalPowerSeries(fps) *= scalar;
+  }
+
+  constexpr friend FormalPowerSeries operator*(const ModInt &scalar,
+                                               const FormalPowerSeries &fps) {
+    return fps * scalar;
+  }
+
   constexpr FormalPowerSeries operator*(const FormalPowerSeries &other) const {
     return FormalPowerSeries(Convolution(*this, other));
   }
@@ -168,11 +185,59 @@ public:
 
   /// Returns the first `size` terms of the formal power series that is this
   /// formal power series raised to the power of `k`, where `k` is a
-  /// non-negative integer, using binary exponentiation in O(C(size) * log K),
-  /// where C(N) is the time complexity of convolution.
+  /// non-negative integer, in O(C(size)) time (excluding the cost of
+  /// computing a multiplicative modular inverse), where C(N) is the time
+  /// complexity of convolution.
+  constexpr FormalPowerSeries pow(std::uint64_t k, size_t size) const {
+    // We make no assumptions about the polynomial, unlike in other methods.
+    //
+    // If its constant term were 1, (indeed, as `FormalPowerSeries::log`
+    // requires), we may delegate to `log` and `exp`, seeing as P^k(x) = exp(k *
+    // ln(P(x))).
+    //
+    // So, we instead extract out a factor to exponentiate a polynomial with a
+    // constant term of 1. Concretely, we find the first non-zero coefficient
+    // index, in other words the first i such that a = [x^i]P(x) is non-zero,
+    // then P(x) = a * x^i * Q(x) for some Q(x) with Q(0) = 1. Then, P^k(x) =
+    // a^k * x^{ik} * Q^k(x).
+    if (k == 0) {
+      return FormalPowerSeries::mult_identity(size);
+    }
+
+    size_t i = 0;
+    while (i < this->size() && (*this)[i] == ModInt(0)) {
+      ++i;
+    }
+    // As our answer has a factor of x^{ik}, its first i * k coefficients are
+    // zero. We can therefore exit early if i * k >= size.
+    if (i == this->size() /* <-> P(x) = 0 */ ||
+        i >= (size + k - 1) / k /* <-> i * k >= size */) {
+      return FormalPowerSeries(size);
+    } // i * k < size.
+
+    const auto a = (*this)[i];
+    // Q(x) = (P(x) / a) / x^i. Note that dividing by x^i is a left shift.
+    auto q = *this * (ModInt(1) / a);
+    q.erase(q.begin(), q.begin() + i); // Left shift.
+
+    // P^k(x) = a^k * x^{ik} * Q^k(x). Multiplication by x^{ik} is a shift right
+    // by i * k, meaning we only need to compute the first (size - i * k) terms
+    // of Q^k(x).
+    size_t n = size - i * k;
+    q = (q.log(n) * k).exp(n) * a.pow(k);
+    q.insert(q.begin(), i * k, ModInt(0)); // Right shift, pad with zeros.
+    assert(q.size() == size);
+
+    return q;
+  }
+
+  /// Returns the first `size` terms of the formal power series that is this
+  /// formal power series raised to the power of `k`, where `k` is a
+  /// non-negative integer, using naive binary exponentiation in
+  /// O(C(size) * log K) time, where C(N) is the time complexity of convolution.
+  /// Asymptotically slower than `FormalPowerSeries::pow`.
   constexpr FormalPowerSeries bin_pow(std::uint64_t k, size_t size) const {
-    FormalPowerSeries result(size);
-    result[0] = ModInt(1);
+    FormalPowerSeries result = FormalPowerSeries::mult_identity(size);
     FormalPowerSeries power = this->take(size);
     while (k > 0) {
       if (k & 1) {
@@ -181,6 +246,13 @@ public:
       power = (power * power).take(size);
       k >>= 1;
     }
+    return result;
+  }
+
+  /// Returns the first `size` terms of the formal power series P(x) = 1.
+  static constexpr FormalPowerSeries mult_identity(size_t size) {
+    FormalPowerSeries result(size);
+    result[0] = ModInt(1);
     return result;
   }
 };
