@@ -44,7 +44,14 @@ Apart from `verifications`, that contains [Library Checker](https://judge.yosupo
 - `README.md`: a write-up / solution explanation of the problem.
 -  `solution.cpp`: source code of the solution to the problem, using this library together with ACL.
 
-Each solution can be compiled from the `examples` directory via `make`. Specifically running `make single file=<file-path>` generates the `<file-path>.out` executable. For instance,
+Before compiling any examples, remember to instantiate submodules via the one-off 
+
+```
+git submodule init 
+git submodule update
+```
+
+Each solution can be then compiled from the `examples` directory via `make`. Specifically running `make single file=<file-path>` generates the `<file-path>.out` executable. For instance,
 
 ```sh
 ❯ make single file=partition-number/solution.cpp && echo "10" | partition-number/solution.out # First 11 partition numbers
@@ -58,7 +65,7 @@ In competitive programming, a single, self-contained source file is typically su
 
 Install the `oj-bundle` CLI tool can be installed with `pip3 install online-judge-verify-helper` (for details, see the [repository](https://github.com/online-judge-tools/verification-helper)) and be sure that it is in your `PATH` (append the installation location to it if not). This should then allow code that uses this library's headers to be expanded.
 
-For example, an `examples` solution that uses this library with ACL can be expanded into the submission-ready `combined.cpp` file by running (from the `examples` directory):
+For instance, an `examples` solution that uses this library with ACL can be expanded into the submission-ready `combined.cpp` file by running (from the `examples` directory):
 
 ```sh
 ❯ oj-bundle partition-number/solution.cpp > combined.cpp && python3 ../ac-library/expander.py --lib=../ac-library combined.cpp
