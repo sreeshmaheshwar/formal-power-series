@@ -197,7 +197,7 @@ FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
   // As our answer has a factor of x^{ik}, its first i * k coefficients are
   // zero. We can therefore exit early if i * k >= size.
   if (i == this->size() /* <-> P(x) is 0 */ || i > size / k ||
-      (i == size / k && size % k != 0)) { // Avoid overflow.
+      (i == size / k && size % k == 0)) { // Avoid overflow.
     return FormalPowerSeries(size);
   } // i * k < size holds.
 
