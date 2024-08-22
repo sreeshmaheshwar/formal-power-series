@@ -42,7 +42,7 @@ The `examples` directory contains subdirectories corresponding to example compet
 Apart from `verifications`, that contains [Library Checker](https://judge.yosupo.jp/) verification submissions for individual formal power series operations, each such subdirectory has the following structure:
 
 - `README.md`: a write-up / solution explanation of the problem.
--  `solution.cpp`: source code of the solution to the problem, using this library together with ACL.
+-  `solution.cpp`: source code of the solution to the problem, using this library with ACL.
 
 Before compiling any examples, remember to instantiate submodules via the one-off 
 
@@ -63,7 +63,7 @@ g++ -std=c++20 -Wall -Wextra -Wpedantic -I ../ac-library partition-number/soluti
 
 In competitive programming, a single, self-contained source file is typically submitted to the judge. Bundling tools such as [OJ-Bundle](https://github.com/online-judge-tools/verification-helper) are therefore commonly used to _"expand"_ out `#include`s of a source file where relevant, producing a single, submission-ready output. This tool is compatible with this library's headers. ACL's [expander.py](https://github.com/atcoder/ac-library/blob/master/expander.py) provides similar functionality but for ACL headers.
 
-Install the `oj-bundle` CLI tool can be installed with `pip3 install online-judge-verify-helper` (for details, see the [repository](https://github.com/online-judge-tools/verification-helper)) and be sure that it is in your `PATH` (append the installation location to it if not). This should then allow code that uses this library's headers to be expanded.
+Install the `oj-bundle` CLI tool with `pip3 install online-judge-verify-helper` (for details, see the [repository](https://github.com/online-judge-tools/verification-helper)) and be sure that it is in your `PATH` (append the installation location to it if not). This library's headers can then be bundled for submission.
 
 For instance, an `examples` solution that uses this library with ACL can be expanded into the submission-ready `combined.cpp` file by running (from the `examples` directory):
 
