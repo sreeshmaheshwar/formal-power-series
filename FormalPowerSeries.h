@@ -65,7 +65,7 @@ public:
 
   /// Returns the first `size` terms of the formal power series that is the
   /// natural logarithm of this formal power series.
-  /// Precondition: this polynomial is non-empty with constant term  of one.
+  /// Precondition: this polynomial is non-empty with constant term of one.
   constexpr FormalPowerSeries log(std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is the
