@@ -34,3 +34,15 @@ int main() {
 }
 
 ```
+
+## Examples
+
+The `examples` directory contains subdirectories corresponding to example competitive programming problems that can be solved with this library - write-ups/explanations are in each `README.md` and source codes in each `solution.cpp`. These problems were chosen for simple implementations that highlight the library's usage.
+
+Each solution can be compiled from the `examples` directory via `make` - for example:
+
+```sh
+❯ make single file=partition-number/solution.cpp && echo "10" | ./partition-number/solution.out
+g++ -std=c++20 -Wall -Wextra -Wpedantic -I ../ac-library partition-number/solution.cpp -o partition-number/solution.out
+1 1 2 3 5 7 11 15 22 30 42
+```
