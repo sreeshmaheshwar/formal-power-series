@@ -30,6 +30,7 @@
  */
 
 #include "../FormalPowerSeries.h"
+#include "../ModCombinatorics.h"
 #include <atcoder/convolution>
 #include <atcoder/modint>
 #include <cstddef>
@@ -41,26 +42,6 @@ using PowerSeries = FormalPowerSeries<mint, [](const auto &a, const auto &b) {
   return atcoder::convolution(a, b);
 }>;
 
-struct Combinatorics {
-  std::size_t n;
-  std::vector<mint> facts;         // Factorials.
-  std::vector<mint> inverse_facts; // Multiplicative inverses of factorials.
-  std::vector<mint> inverses;      // Multiplicative inverses.
-
-  Combinatorics(std::size_t maximum)
-      : n(maximum + 1), facts(n), inverse_facts(n), inverses(n) {
-    facts[0] = 1;
-    for (std::size_t i = 1; i < n; ++i) {
-      facts[i] = facts[i - 1] * i;
-    }
-    inverse_facts[n - 1] = facts[n - 1].inv();
-    for (std::size_t i = n - 1; i > 0; --i) {
-      inverse_facts[i - 1] = inverse_facts[i] * i;
-      inverses[i] = facts[i - 1] * inverse_facts[i];
-    }
-  }
-};
-
 int main() {
   std::ios::sync_with_stdio(false);
   std::cin.tie(nullptr);
@@ -68,7 +49,7 @@ int main() {
   int n, t;
   std::cin >> n >> t;
 
-  Combinatorics combinatorics(t);
+  ModCombinatorics<mint> combinatorics(t);
 
   std::vector<int> freq(t + 1);
   for (int i = 0, s; i < n; ++i) {

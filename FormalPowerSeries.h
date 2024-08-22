@@ -80,9 +80,10 @@ public:
 
   /// Returns the first `size` terms of the formal power series that is this
   /// formal power series raised to the power of `k`, where `k` is a
-  /// non-negative integer, in O(C(size)) time (excluding the cost of
-  /// computing a multiplicative modular inverse), where C(N) is the time
-  /// complexity of convolution.
+  /// non-negative integer, in O(C(size)) time (excluding the cost of computing
+  /// a stand-alone multiplicative modular inverse directly via the
+  /// implementation of `ModInt`), where C(N) is the time complexity of
+  /// convolution.
   constexpr FormalPowerSeries pow(std::uint64_t k, std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is this
