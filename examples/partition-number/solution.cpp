@@ -10,7 +10,7 @@ using PowerSeries = FormalPowerSeries<mint, [](const auto &a, const auto &b) {
 
 // Computes, up to x^n, the product (1 - x^i) from i = 1 to inf.
 // https://en.wikipedia.org/wiki/Pentagonal_number_theorem
-PowerSeries pentagonal_series(std::size_t n) {
+PowerSeries pentagonal_series(int n) {
   PowerSeries pentagonal(n + 1);
   pentagonal[0] = 1;
 
