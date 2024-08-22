@@ -22,6 +22,7 @@ PowerSeries falling_factorial_range(int l, int r) {
 int main() {
   std::ios::sync_with_stdio(false);
   std::cin.tie(nullptr);
+
   int n;
   std::cin >> n;
   for (const auto &x : falling_factorial_range(0, n - 1)) {
