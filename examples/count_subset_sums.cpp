@@ -49,13 +49,13 @@ struct Combinatorics {
 
   Combinatorics(std::size_t maximum)
       : n(maximum + 1), facts(n), inverse_facts(n), inverses(n) {
-    facts[0] = inverse_facts[0] = 1;
+    facts[0] = 1;
     for (std::size_t i = 1; i < n; ++i) {
       facts[i] = facts[i - 1] * i;
     }
     inverse_facts[n - 1] = facts[n - 1].inv();
-    for (std::size_t i = n - 2; i > 0; --i) {
-      inverse_facts[i] = inverse_facts[i + 1] * (i + 1);
+    for (std::size_t i = n - 1; i > 0; --i) {
+      inverse_facts[i - 1] = inverse_facts[i] * i;
       inverses[i] = facts[i - 1] * inverse_facts[i];
     }
   }
@@ -68,7 +68,7 @@ int main() {
   int n, t;
   std::cin >> n >> t;
 
-  Combinatorics combinatorics(t + 1);
+  Combinatorics combinatorics(t);
 
   std::vector<int> freq(t + 1);
   for (int i = 0, s; i < n; ++i) {
