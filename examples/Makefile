@@ -7,3 +7,4 @@ single: $(file)
 
 clean:
 	rm -f *.out
+	rm -f */*.out
