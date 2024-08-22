@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <initializer_list>
 #include <type_traits>
@@ -23,9 +24,9 @@ public:
 
   constexpr FormalPowerSeries() noexcept = default;
 
-  explicit constexpr FormalPowerSeries(size_t n);
+  explicit constexpr FormalPowerSeries(std::size_t n);
 
-  explicit constexpr FormalPowerSeries(size_t n, const ModInt &value);
+  explicit constexpr FormalPowerSeries(std::size_t n, const ModInt &value);
 
   explicit constexpr FormalPowerSeries(const std::vector<ModInt> &vec);
 
@@ -54,7 +55,7 @@ public:
 
   /// Returns the formal power series consisting of the first `size` terms of
   /// this formal power series.
-  constexpr FormalPowerSeries take(size_t size) const;
+  constexpr FormalPowerSeries take(std::size_t size) const;
 
   /// Returns the derivative of this formal power series.
   constexpr FormalPowerSeries derivative() const;
@@ -65,34 +66,34 @@ public:
   /// Returns the first `size` terms of the formal power series that is the
   /// natural logarithm of this formal power series.
   /// Precondition: this polynomial is non-empty with constant term  of one.
-  constexpr FormalPowerSeries log(size_t size) const;
+  constexpr FormalPowerSeries log(std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is the
   /// multiplicative inverse of this formal power series.
   /// Precondition: this polynomial is non-empty with a non-zero constant term.
-  constexpr FormalPowerSeries inverse(size_t size) const;
+  constexpr FormalPowerSeries inverse(std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is e raised
   /// to the power of this formal power series.
   /// Precondition: this polynomial is non-empty with a zero constant term.
-  constexpr FormalPowerSeries exp(size_t size) const;
+  constexpr FormalPowerSeries exp(std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is this
   /// formal power series raised to the power of `k`, where `k` is a
   /// non-negative integer, in O(C(size)) time (excluding the cost of
   /// computing a multiplicative modular inverse), where C(N) is the time
   /// complexity of convolution.
-  constexpr FormalPowerSeries pow(std::uint64_t k, size_t size) const;
+  constexpr FormalPowerSeries pow(std::uint64_t k, std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is this
   /// formal power series raised to the power of `k`, where `k` is a
   /// non-negative integer, using naive binary exponentiation in
   /// O(C(size) * log K) time, where C(N) is the time complexity of convolution.
   /// Asymptotically slower than `FormalPowerSeries::pow`.
-  constexpr FormalPowerSeries bin_pow(std::uint64_t k, size_t size) const;
+  constexpr FormalPowerSeries bin_pow(std::uint64_t k, std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series P(x) = 1.
-  static constexpr FormalPowerSeries mult_identity(size_t size);
+  static constexpr FormalPowerSeries mult_identity(std::size_t size);
 
   template <typename ModIntT, ConvolutionFunction<ModIntT> auto ConvolutionT>
   constexpr friend FormalPowerSeries<ModIntT, ConvolutionT>

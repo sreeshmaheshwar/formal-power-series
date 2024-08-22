@@ -4,12 +4,13 @@
 #include <cassert>
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
-constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(size_t n)
+constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(
+    std::size_t n)
     : Base(n) {}
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(
-    size_t n, const ModInt &value)
+    std::size_t n, const ModInt &value)
     : Base(n, value) {}
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
@@ -55,7 +56,7 @@ FormalPowerSeries<ModInt, Convolution>::operator+(
     const FormalPowerSeries &other) const {
   const auto n = std::max(this->size(), other.size());
   FormalPowerSeries result(n);
-  for (size_t i = 0; i < n; ++i) {
+  for (std::size_t i = 0; i < n; ++i) {
     if (i < this->size()) {
       result[i] += (*this)[i];
     }
@@ -72,7 +73,7 @@ FormalPowerSeries<ModInt, Convolution>::operator-(
     const FormalPowerSeries &other) const {
   const auto n = std::max(this->size(), other.size());
   FormalPowerSeries result(n);
-  for (size_t i = 0; i < n; ++i) {
+  for (std::size_t i = 0; i < n; ++i) {
     if (i < this->size()) {
       result[i] += (*this)[i];
     }
@@ -85,7 +86,7 @@ FormalPowerSeries<ModInt, Convolution>::operator-(
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
-FormalPowerSeries<ModInt, Convolution>::take(size_t size) const {
+FormalPowerSeries<ModInt, Convolution>::take(std::size_t size) const {
   FormalPowerSeries result(*this);
   result.resize(size);
   return result;
@@ -98,7 +99,7 @@ FormalPowerSeries<ModInt, Convolution>::derivative() const {
     return *this;
   }
   FormalPowerSeries result(this->size() - 1);
-  for (size_t i = 1; i < this->size(); ++i) {
+  for (std::size_t i = 1; i < this->size(); ++i) {
     result[i - 1] = (*this)[i] * ModInt(i);
   }
   return result;
@@ -108,7 +109,7 @@ template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
 FormalPowerSeries<ModInt, Convolution>::antiderivative() const {
   FormalPowerSeries result(this->size() + 1);
-  for (size_t i = 1; i < result.size(); ++i) {
+  for (std::size_t i = 1; i < result.size(); ++i) {
     result[i] = (*this)[i - 1] / ModInt(i);
   }
   return result;
@@ -116,7 +117,7 @@ FormalPowerSeries<ModInt, Convolution>::antiderivative() const {
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
-FormalPowerSeries<ModInt, Convolution>::log(size_t size) const {
+FormalPowerSeries<ModInt, Convolution>::log(std::size_t size) const {
   assert(!this->empty() && this->front() == ModInt(1));
   // d/dx (ln P(x)) = P'(x) / P(x).
   return (derivative() * inverse(size)).antiderivative().take(size);
@@ -124,7 +125,7 @@ FormalPowerSeries<ModInt, Convolution>::log(size_t size) const {
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
-FormalPowerSeries<ModInt, Convolution>::inverse(size_t size) const {
+FormalPowerSeries<ModInt, Convolution>::inverse(std::size_t size) const {
   assert(!this->empty() && this->front() != ModInt(0));
   // Newton's Method: Q_{k+1} = Q_k - F(Q_k) / F'(Q_k) (mod x^{2^{k+1}}).
   //
@@ -148,7 +149,7 @@ FormalPowerSeries<ModInt, Convolution>::inverse(size_t size) const {
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
-FormalPowerSeries<ModInt, Convolution>::exp(size_t size) const {
+FormalPowerSeries<ModInt, Convolution>::exp(std::size_t size) const {
   assert(!this->empty() && this->front() == ModInt(0));
   // Newton's Method: Q_{k+1} = Q_k - F(Q_k) / F'(Q_k) (mod x^{2^{k+1}}).
   //
@@ -173,7 +174,7 @@ FormalPowerSeries<ModInt, Convolution>::exp(size_t size) const {
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
 FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
-                                            size_t size) const {
+                                            std::size_t size) const {
   // We make no assumptions about the polynomial, unlike in other methods.
   //
   // If its constant term were 1, (indeed, as `FormalPowerSeries::log`
@@ -189,7 +190,7 @@ FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
     return FormalPowerSeries::mult_identity(size);
   }
 
-  size_t i = 0;
+  std::size_t i = 0;
   while (i < this->size() && (*this)[i] == ModInt(0)) {
     ++i;
   }
@@ -208,7 +209,7 @@ FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
   // P^k(x) = a^k * x^{ik} * Q^k(x). Multiplication by x^{ik} is a shift right
   // by i * k, meaning we only need to compute the first (size - i * k) terms
   // of Q^k(x).
-  size_t n = size - i * k;
+  std::size_t n = size - i * k;
   q = (q.log(n) * ModInt(k)).exp(n) * a.pow(k);
   q.insert(q.begin(), i * k, ModInt(0)); // Right shift, pad with zeros.
   assert(q.size() == size);
@@ -219,7 +220,7 @@ FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
 FormalPowerSeries<ModInt, Convolution>::bin_pow(std::uint64_t k,
-                                                size_t size) const {
+                                                std::size_t size) const {
   FormalPowerSeries result = FormalPowerSeries::mult_identity(size);
   FormalPowerSeries power = this->take(size);
   while (k > 0) {
@@ -234,7 +235,7 @@ FormalPowerSeries<ModInt, Convolution>::bin_pow(std::uint64_t k,
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
-FormalPowerSeries<ModInt, Convolution>::mult_identity(size_t size) {
+FormalPowerSeries<ModInt, Convolution>::mult_identity(std::size_t size) {
   if (!size) {
     return {};
   }
