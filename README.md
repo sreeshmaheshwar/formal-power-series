@@ -1,10 +1,10 @@
 # Formal Power Series
 
-Lightweight C++ implementation of various (non-exhaustive) operations on truncated formal power series for use in programming contests, and an idiomatic interface to them. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library).
+Lightweight C++ implementation of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, and an idiomatic interface to them. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library).
 
 ## Usage
 
-The `FormalPowerSeries` class provides a `std::vector` interface and requires only a modular integer implementation and a (corresponding) convolution operation (typically, [NTT](https://mathworld.wolfram.com/NumberTheoreticTransform.html)), both common among libraries. The polynomial multiplication implementation underlying the formal power series operations may therefore be switched out at will.
+The `FormalPowerSeries` class provides a `std::vector`-like interface and requires only a modular integer implementation and a (corresponding) convolution operation (typically, [NTT](https://mathworld.wolfram.com/NumberTheoreticTransform.html)), both common among libraries. The polynomial multiplication implementation underlying the formal power series operations may therefore be switched out at will.
 
 The solution to an [AtCoder problem](https://atcoder.jp/contests/abc297/tasks/abc297_h), using this library backed by the [AC Library](https://github.com/atcoder/ac-library), is shown below.
 
