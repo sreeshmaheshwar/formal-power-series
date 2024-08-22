@@ -1,9 +1,4 @@
-/**
- * Solution to:
- * https://atcoder.jp/contests/abc297/tasks/abc297_h
- */
-
-#include "../FormalPowerSeries.h"
+#include "../../FormalPowerSeries.h"
 #include <atcoder/convolution>
 #include <atcoder/modint>
 #include <iostream>

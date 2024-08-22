@@ -1,10 +1,5 @@
-/**
- * Solution to:
- * https://atcoder.jp/contests/abc303/tasks/abc303_h
- */
-
-#include "../FormalPowerSeries.h"
-#include "../ModCombinatorics.h"
+#include "../../FormalPowerSeries.h"
+#include "../../ModCombinatorics.h"
 #include <atcoder/convolution>
 #include <atcoder/modint>
 #include <cstddef>
