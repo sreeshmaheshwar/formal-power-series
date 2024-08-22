@@ -1,6 +1,6 @@
 # Formal Power Series
 
-Lightweight C++ implementation of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, and an idiomatic interface to them. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library).
+Lightweight C++ implementation of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, an idiomatic interface to them, and some example problems with write-ups/explanations. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library).
 
 ## Usage
 
@@ -33,4 +33,16 @@ int main() {
   std::cout << (q * (PowerSeries{1} - p).pow(2, n + 1).inverse(n + 1))[n].val();
 }
 
+```
+
+## Examples
+
+The `examples` directory contains subdirectories corresponding to example competitive programming problems that can be solved with this library - write-ups/explanations are in each `README.md` and source codes in each `solution.cpp`. These problems were chosen for simple implementations that highlight the library's usage.
+
+Each `.cpp` solution can be compiled from the `examples` directory via `make`, specifically `make single file=<file-path>` which generates the `<file-path>.out` executable. For instance,
+
+```sh
+❯ make single file=partition-number/solution.cpp && echo "10" | partition-number/solution.out # First 11 partition numbers
+g++ -std=c++20 -Wall -Wextra -Wpedantic -I ../ac-library partition-number/solution.cpp -o partition-number/solution.out
+1 1 2 3 5 7 11 15 22 30 42
 ```
