@@ -1,12 +1,12 @@
 # Formal Power Series
 
-Lightweight C++ implementation of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, an idiomatic interface to them, and some example problems with write-ups/explanations. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library).
+Lightweight C++ implementation of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, an idiomatic interface to them, and some example problems with write-ups/explanations. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library) (ACL).
 
 ## Usage
 
 The `FormalPowerSeries` class provides a `std::vector`-like interface and requires only a modular integer implementation and a (corresponding) convolution operation (typically, [NTT](https://mathworld.wolfram.com/NumberTheoreticTransform.html)), both common among libraries. The polynomial multiplication implementation underlying the formal power series operations may therefore be switched out at will.
 
-The solution to an [AtCoder problem](https://atcoder.jp/contests/abc297/tasks/abc297_h), using this library backed by the [AC Library](https://github.com/atcoder/ac-library), is shown below.
+The solution to an [AtCoder problem](https://atcoder.jp/contests/abc297/tasks/abc297_h), using this library backed by ACL, is shown below.
 
 ```cpp
 #include "FormalPowerSeries.h"
@@ -37,12 +37,29 @@ int main() {
 
 ## Examples
 
-The `examples` directory contains subdirectories corresponding to example competitive programming problems that can be solved with this library - write-ups/explanations are in each `README.md` and source codes in each `solution.cpp`. These problems were chosen for simple implementations that highlight the library's usage.
+The `examples` directory contains subdirectories corresponding to example competitive programming problems that can be solved with this library. These tasks were chosen for simple implementations that highlight the library's usage.
 
-Each `.cpp` solution can be compiled from the `examples` directory via `make`, specifically `make single file=<file-path>` which generates the `<file-path>.out` executable. For instance,
+Apart from `verifications`, that contains [Library Checker](https://judge.yosupo.jp/) verification submissions for individual formal power series operations, each such subdirectory has the following structure:
+
+- `README.md`: a write-up / solution explanation of the problem.
+-  `solution.cpp`: source code of the solution to the problem, using this library together with ACL.
+
+Each solution can be compiled from the `examples` directory via `make`. Specifically running `make single file=<file-path>` generates the `<file-path>.out` executable. For instance,
 
 ```sh
 ❯ make single file=partition-number/solution.cpp && echo "10" | partition-number/solution.out # First 11 partition numbers
 g++ -std=c++20 -Wall -Wextra -Wpedantic -I ../ac-library partition-number/solution.cpp -o partition-number/solution.out
 1 1 2 3 5 7 11 15 22 30 42
+```
+
+## Submission
+
+In competitive programming, a single, self-contained source file is typically submitted to the judge. Bundling tools such as [OJ-Bundle](https://github.com/online-judge-tools/verification-helper) are therefore commonly used to _"expand"_ out `#include`s of a source file where relevant, producing a single, submission-ready output. This tool is compatible with this library's headers. ACL's [expander.py](https://github.com/atcoder/ac-library/blob/master/expander.py) provides similar functionality but for ACL headers.
+
+Install the `oj-bundle` CLI tool can be installed with `pip3 install online-judge-verify-helper` (for details, see the [repository](https://github.com/online-judge-tools/verification-helper)) and be sure that it is in your `PATH` (append the installation location to it if not). This should then allow code that uses this library's headers to be expanded.
+
+For example, an `examples` solution that uses this library with ACL can be expanded into the submission-ready `combined.cpp` file by running (from the `examples` directory):
+
+```sh
+❯ oj-bundle partition-number/solution.cpp > combined.cpp && python3 ../ac-library/expander.py --lib=../ac-library combined.cpp
 ```
