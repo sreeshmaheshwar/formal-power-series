@@ -1,6 +1,6 @@
 // https://judge.yosupo.jp/problem/exp_of_formal_power_series
 
-#include "../FormalPowerSeries.h"
+#include "../../FormalPowerSeries.h"
 #include <atcoder/convolution>
 #include <atcoder/modint>
 #include <iostream>
