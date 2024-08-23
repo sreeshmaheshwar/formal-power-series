@@ -34,6 +34,6 @@ and
 
 $$ Q(x) = \sum_{i = 1}^\infty \sum_{k = 1}^\infty (-1)^{k+1} k x^{ik}. $$
 
-At this point, the expressions above can be ported to code via nested loops. Within the inner most $k$ loop, we iterate through all multiples of $i$ that are at most $N$ (recall that we need to compute $P$ and $Q$ only up to the $N$'th power of $x$), and doing so for all $i$ till $N$ yields an $O(N \log N)$ time complexity (the well-known ["harmonic series trick"](https://discuss.codechef.com/t/more-intuitive-explanation-for-the-harmonic-seriess-sum/67287)).
+At this point, the expressions above can be ported to code via nested loops. Within the innermost $k$ loop, we iterate through all multiples of $i$ that are at most $N$ (recall that we need to compute $P$ and $Q$ only up to the $N$'th power of $x$), and doing so for all $i$ till $N$ yields an $O(N \log N)$ time complexity (the well-known ["harmonic series trick"](https://discuss.codechef.com/t/more-intuitive-explanation-for-the-harmonic-seriess-sum/67287)).
 
 See the source code of `./solution.cpp` for implementation details. 

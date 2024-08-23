@@ -80,17 +80,14 @@ public:
 
   /// Returns the first `size` terms of the formal power series that is this
   /// formal power series raised to the power of `k`, where `k` is a
-  /// non-negative integer, in O(C(size)) time (excluding the cost of computing
-  /// a stand-alone multiplicative modular inverse directly via the
-  /// implementation of `ModInt`), where C(N) is the time complexity of
-  /// convolution.
+  /// non-negative integer.
   constexpr FormalPowerSeries pow(std::uint64_t k, std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series that is this
   /// formal power series raised to the power of `k`, where `k` is a
   /// non-negative integer, using naive binary exponentiation in
   /// O(C(size) * log K) time, where C(N) is the time complexity of convolution.
-  /// Asymptotically slower than `FormalPowerSeries::pow`.
+  /// Generally slower than `FormalPowerSeries::pow` when C(N) is O(N log N).
   constexpr FormalPowerSeries bin_pow(std::uint64_t k, std::size_t size) const;
 
   /// Returns the first `size` terms of the formal power series P(x) = 1.

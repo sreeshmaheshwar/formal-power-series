@@ -135,7 +135,7 @@ FormalPowerSeries<ModInt, Convolution>::inverse(std::size_t size) const {
   // Thus, F'(Q) = -1 / Q^2, and the Newton iteration becomes Q_{k+1} = Q_k *
   // (2 - P * Q_k) (mod x^{2^{k+1}}).
   //
-  // As we assert a non-zero constant term of P(x), we can take the
+  // As a non-zero constant term of P(x) is a precondition, we can take the
   // multiplicative inverse of the constant term of P(x) as the initial Q_0
   // since it is the constant term of P(x)^{-1}.
   FormalPowerSeries res = {ModInt(1) / this->front()};
@@ -159,8 +159,8 @@ FormalPowerSeries<ModInt, Convolution>::exp(std::size_t size) const {
   // Thus, F'(Q) = 1 / Q, and the Newton iteration becomes Q_{k+1} = Q_k * (1
   // + P - ln(Q_k)) (mod x^{2^{k+1}}).
   //
-  // As we assert a zero constant term of P(x), we can take 1 as the initial
-  // Q_0 since it is the constant term of e^{P(x)}.
+  // As a zero constant term of P(x) is a precondition, we can take 1 as the
+  // initial Q_0 since it is the constant term of e^{P(x)}.
   FormalPowerSeries res = {ModInt(1)};
   while (res.size() != size) {
     const auto next_size = std::min(res.size() * 2, size);
@@ -175,7 +175,8 @@ template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
 FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
                                             std::size_t size) const {
-  // We make no assumptions about the polynomial, unlike in other methods.
+  // We make no assumptions about the FPS, unlike in other methods, as it is
+  // well-defined for any polynomial.
   //
   // If its constant term were 1, (indeed, as `FormalPowerSeries::log`
   // requires), we may delegate to `log` and `exp`, seeing as P^k(x) = exp(k *
