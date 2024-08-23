@@ -1,6 +1,6 @@
 # Formal Power Series
 
-Lightweight C++ implementation of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, an idiomatic interface to them, and some example problems with write-ups/explanations. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library) (ACL).
+Lightweight C++ implementations of various (non-exhaustive) operations on truncated [formal power series](https://en.wikipedia.org/wiki/Formal_power_series) for use in programming contests, an idiomatic interface to them, and some example problems with write-ups/explanations. Centred around interoperability with and delegation to any suitable existing competitive programming library, such as [AtCoder](https://atcoder.jp/)'s popular [AC Library](https://github.com/atcoder/ac-library) (ACL).
 
 ## Usage
 
@@ -44,14 +44,14 @@ Apart from `verifications`, that contains [Library Checker](https://judge.yosupo
 - `README.md`: a write-up / solution explanation of the problem.
 -  `solution.cpp`: source code of the solution to the problem, using this library with ACL.
 
-Before compiling any examples, remember to instantiate submodules via the one-off 
+Before compiling any examples, remember to instantiate submodules by running the one-off commands below.
 
-```
-git submodule init 
-git submodule update
+```sh
+❯ git submodule init 
+❯ git submodule update
 ```
 
-Each solution can be then compiled from the `examples` directory via `make`. Specifically running `make single file=<file-path>` generates the `<file-path>.out` executable. For instance,
+Each solution can be then compiled from the `examples` directory via `make` - running `make single file=<file-path>` generates the `<file-path>.out` executable. For instance,
 
 ```sh
 ❯ make single file=partition-number/solution.cpp && echo "10" | partition-number/solution.out # First 11 partition numbers
@@ -61,7 +61,7 @@ g++ -std=c++20 -Wall -Wextra -Wpedantic -I ../ac-library partition-number/soluti
 
 ## Submission
 
-In competitive programming, a single, self-contained source file is typically submitted to the judge. Bundling tools such as [OJ-Bundle](https://github.com/online-judge-tools/verification-helper) are therefore commonly used to _"expand"_ out `#include`s of a source file where relevant, producing a single, submission-ready output. This tool is compatible with this library's headers. ACL's [expander.py](https://github.com/atcoder/ac-library/blob/master/expander.py) provides similar functionality but for ACL headers.
+In competitive programming, a single, self-contained source file is typically submitted to the judge. Bundling tools such as [OJ-Bundle](https://github.com/online-judge-tools/verification-helper) are therefore commonly used to *expand* out `#include`s of a source file (where relevant), producing a single, submission-ready output. This tool is compatible with this library's headers. ACL's [expander.py](https://github.com/atcoder/ac-library/blob/master/expander.py) provides similar functionality but for ACL headers.
 
 Install the `oj-bundle` CLI tool with `pip3 install online-judge-verify-helper` (for details, see the [repository](https://github.com/online-judge-tools/verification-helper)) and be sure that it is in your `PATH` (append the installation location to it if not). This library's headers can then be bundled for submission.
 
@@ -74,4 +74,4 @@ For instance, an `examples` solution that uses this library with ACL can be expa
 ## Notes
 
 - There are formal power series operations required by some competitive programming problems that are not yet supported - for example, finding the square root of a formal power series or composing two together. Moreover, *sparse* variants (meaning, on large polynomials with comparatively few non-zero coefficients) of the operations that _are_ supported have not yet been implemented.
-- Inspecting [Library Checker](https://judge.yosupo.jp/) submissions shows other implementations of operations being faster in practice. We rely on Newton's method for efficient (generally $O(N \log N)$, assuming $O(N \log N)$ convolution) yet simple implementations, but it would seem that other methods occasionally have better constant factors. In some cases though, different NTT performance is the culprit.
+- [Library Checker](https://judge.yosupo.jp/) submissions show other implementations of operations being faster in practice. We rely on Newton's method for efficient (generally $O(N \log N)$, assuming $O(N \log N)$ convolution) yet simple implementations, but it would appear that other methods occasionally have better constant factors. In some cases though, different NTT performance is the culprit.

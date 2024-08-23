@@ -16,10 +16,10 @@ The idea here is that the product of $N$ copies of $f$, from $i = 1$ to $N$, acc
 
 Our desired resultant power of $x$ is therefore $(N - 2)$ and we can multiply $(N - 2)!$ by its coefficient to produce the desired sum of all multinomial coefficients, which is our answer. 
 
-This stems from the well-known result that the number of trees on $N$ vertices with degrees $d_i$ is given by
+This stems from the known result that the number of trees on $N$ vertices with degrees $d_i$ is given by
 
 $$ \binom{N-2}{(d_1 - 1),\dots,(d_N - 1)}. $$
 
-As for the implementation, we can finds the coefficients $b_i$ directly (having precomputed inverse factorials) and raise the resultant truncated formal power series to the power $N$. This yields an $O(N \log N)$ solution using `FormalPowerSeries::pow`.
+As for the implementation, we find the coefficients $b_i$ directly (having precomputed inverse factorials) and raise the resultant truncated formal power series to the power $N$. This yields an $O(N \log N)$ solution using `FormalPowerSeries::pow`.
 
-See the source code at `solution.cpp` for implementation details. 
+See the source code of `./solution.cpp` for more implementation details. 

@@ -22,9 +22,9 @@ The expansion of the $i$'th term of $P$'s summation relies on a simple geometric
 
 $$ \frac {x^i} {1 + x^i} = x^i \cdot \frac {1} {1 - (-x^i)} = \sum_{k = 1}^\infty (-1)^{k+1} x^{ik}.$$
 
-Now for $Q$, differentiating the standard geometric series result yields a well-known expansion for $- 1 / (1 + x^i)^2$ given by $-1 + 2x^i - 3x^{2i} + \cdots$, and multiplying by $-x^i$ produces the $i$'th term of $Q$'s summation as
+Now for $Q$, differentiating the standard geometric series result yields a well-known expansion for $- 1 / (1 + x^i)^2$ given by $-1 + 2x^i - 3x^{2i} + \cdots$, and multiplying by $-x^i$ yields the following expansion of the $i$'th term of $Q$'s summation:
 
-$$ \sum_{k = 1}^\infty (-1)^{k+1} k x^{ik}. $$
+$$ \frac {x^i} {(1 + x^i)^2} = \sum_{k = 1}^\infty (-1)^{k+1} k x^{ik}. $$
 
 Therefore,
 
@@ -34,6 +34,6 @@ and
 
 $$ Q(x) = \sum_{i = 1}^\infty \sum_{k = 1}^\infty (-1)^{k+1} k x^{ik}. $$
 
-At this point, the expressions above can be directly ported to code via nested loops - within the inner most $k$ loop, we are effectively iterating over all multiples of $i$ that are at most $N$ (recall that we need to compute $P$ and $Q$ only up to the $N$'th power of $x$), and doing so for all $i$ till $N$ yields an $O(N \log N)$ complexity (the well-known "harmonic series trick").
+At this point, the expressions above can be ported to code via nested loops. Within the inner most $k$ loop, we iterate through all multiples of $i$ that are at most $N$ (recall that we need to compute $P$ and $Q$ only up to the $N$'th power of $x$), and doing so for all $i$ till $N$ yields an $O(N \log N)$ time complexity (the well-known ["harmonic series trick"](https://discuss.codechef.com/t/more-intuitive-explanation-for-the-harmonic-seriess-sum/67287)).
 
-See the source code at `solution.cpp` for implementation details. 
+See the source code of `./solution.cpp` for implementation details. 
