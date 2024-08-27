@@ -4,7 +4,7 @@ Lightweight C++ implementations of various (non-exhaustive) operations on trunca
 
 ## Usage
 
-The `FormalPowerSeries` class provides a `std::vector`-like interface and requires only a modular integer implementation and a (corresponding) convolution operation (typically, [NTT](https://mathworld.wolfram.com/NumberTheoreticTransform.html)), both common among libraries. The polynomial multiplication implementation underlying the formal power series operations may therefore be switched out at will.
+The `FormalPowerSeries` class provides a `std::vector`-like interface and requires only a modular integer implementation and a (corresponding) convolution operation (typically, [NTT](https://mathworld.wolfram.com/NumberTheoreticTransform.html)), both common among libraries. The polynomial multiplication implementation underlying the formal power series operations (see `FormalPowerSeries.h` for the APIs) may therefore be switched out at will.
 
 The solution to an [AtCoder problem](https://atcoder.jp/contests/abc297/tasks/abc297_h), using this library backed by ACL, is shown below.
 
@@ -44,7 +44,7 @@ Apart from `verifications`, that contains [Library Checker](https://judge.yosupo
 - `README.md`: a write-up / solution explanation of the problem.
 -  `solution.cpp`: source code of the solution to the problem, using this library with ACL.
 
-Before compiling any examples, remember to instantiate submodules by running the one-off commands below.
+Before compiling any examples, remember to instantiate submodules by running the one-off commands below (after cloning and `cd`-ing into the repo).
 
 ```sh
 ❯ git submodule init 
