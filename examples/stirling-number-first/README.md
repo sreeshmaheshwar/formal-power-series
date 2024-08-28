@@ -22,4 +22,4 @@ which solves to $O(N \log^2 N)$.
 
 In fact, the above divide-and-conquer idea can be used to compute the product of several large integers much more efficiently than naive left-to-right multiplication.
 
-See the source code of `./solution.cpp` for implementation details. 
+See the source code of `./solution.cpp` for implementation details.

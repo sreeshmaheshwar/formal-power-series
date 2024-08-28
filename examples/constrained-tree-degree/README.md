@@ -22,4 +22,4 @@ $$ \binom{N-2}{(d_1 - 1),\dots,(d_N - 1)}. $$
 
 As for the implementation, we find the coefficients $b_i$ directly (having precomputed inverse factorials) and raise the resultant truncated formal power series to the power $N$. This yields an $O(N \log N)$ solution using `FormalPowerSeries::pow`.
 
-See the source code of `./solution.cpp` for more implementation details. 
+See the source code of `./solution.cpp` for more implementation details.

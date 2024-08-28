@@ -32,7 +32,6 @@ int main() {
 
   std::cout << (q * (PowerSeries{1} - p).pow(2, n + 1).inverse(n + 1))[n].val();
 }
-
 ```
 
 ## Examples
@@ -42,7 +41,7 @@ The `examples` directory contains subdirectories corresponding to example compet
 Apart from `verifications`, that contains [Library Checker](https://judge.yosupo.jp/) verification submissions for individual formal power series operations, each such subdirectory has the following structure:
 
 - `README.md`: a write-up / solution explanation of the problem.
--  `solution.cpp`: source code of the solution to the problem, using this library with ACL.
+- `solution.cpp`: source code of the solution to the problem, using this library with ACL.
 
 Before compiling any examples, remember to instantiate submodules by running the one-off commands below (after cloning and `cd`-ing into the repo).
 
@@ -61,7 +60,7 @@ g++ -std=c++20 -Wall -Wextra -Wpedantic -I ../ac-library partition-number/soluti
 
 ## Submission
 
-In competitive programming, a single, self-contained source file is typically submitted to the judge. Bundling tools such as [OJ-Bundle](https://github.com/online-judge-tools/verification-helper) are therefore commonly used to *expand* out `#include`s of a source file (where relevant), producing a single, submission-ready output. This tool is compatible with this library's headers. ACL's [expander.py](https://github.com/atcoder/ac-library/blob/master/expander.py) provides similar functionality but for ACL headers.
+In competitive programming, a single, self-contained source file is typically submitted to the judge. Bundling tools such as [OJ-Bundle](https://github.com/online-judge-tools/verification-helper) are therefore commonly used to *expand* out `#include`s of a source file (where relevant), producing a single, submission-ready output. OJ-Bundle is compatible with this library's headers. ACL's [expander.py](https://github.com/atcoder/ac-library/blob/master/expander.py) provides similar functionality but for ACL headers.
 
 Install the `oj-bundle` CLI tool with `pip3 install online-judge-verify-helper` (for details, see the [repository](https://github.com/online-judge-tools/verification-helper)) and be sure that it is in your `PATH` (append the installation location to it if not). This library's headers can then be bundled for submission.
 
@@ -74,4 +73,4 @@ For instance, an `examples` solution that uses this library with ACL can be expa
 ## Notes
 
 - There are formal power series operations required by some competitive programming problems that are not yet supported - for example, finding the square root of a formal power series or composing two together. Moreover, *sparse* variants (meaning, on large polynomials with comparatively few non-zero coefficients) of the operations that _are_ supported have not yet been implemented.
-- [Library Checker](https://judge.yosupo.jp/) submissions show other implementations of operations being faster in practice. We rely on Newton's method for efficient (generally $O(N \log N)$, assuming $O(N \log N)$ convolution) yet simple implementations, but it would appear that other methods occasionally have better constant factors. In some cases though, different NTT performance is the culprit.
+- [Library Checker](https://judge.yosupo.jp/) submissions show other implementations of operations being faster in practice. We rely on Newton's method for efficient (generally $O(N \log N)$, assuming $O(N \log N)$ convolution) yet simple implementations, but it would appear that other methods have better constant factors. In some cases though, different NTT performance is the culprit.

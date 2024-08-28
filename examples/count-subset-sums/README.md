@@ -20,4 +20,4 @@ so we can simply add these coefficients to their corresponding indices of a *run
 
 This iteration will be $O(T \log T)$ overall, since for all $i$ until $T$, we iterate through all multiples of $i$ that are at most $T$ (recall that we only need to compute the terms of this formal power series up to $x^T$) - the well-known ["harmonic series trick"](https://discuss.codechef.com/t/more-intuitive-explanation-for-the-harmonic-seriess-sum/67287). The consequent `FormalPowerSeries::exp` invocation is also $O(T \log T)$, and so this is our complexity.
 
-See the source code of `./solution.cpp` for more implementation details. 
+See the source code of `./solution.cpp` for more implementation details.

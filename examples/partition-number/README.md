@@ -14,4 +14,4 @@ $$\frac{1}{\prod_{i = 1}^\infty (1 - x^i)}.$$
 
 The formal power series corresponding to the denominator, up to $x^N$, can be computed in linear time via the [Pentagonal Number Theorem](https://en.wikipedia.org/wiki/Pentagonal\_number\_theorem). Inverting it in $O(N \log N)$ time then solves our problem with this time complexity.
 
-See the source code of `./solution.cpp` for implementation details. 
+See the source code of `./solution.cpp` for implementation details.
