@@ -1,5 +1,3 @@
-// TODO: Problem link?
-
 #include "../../FormalPowerSeries.h"
 #include "../../ModCombinatorics.h"
 #include <atcoder/convolution>
