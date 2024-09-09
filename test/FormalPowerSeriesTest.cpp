@@ -3,6 +3,7 @@
 #include <atcoder/modint>
 #include <cstddef>
 #include <gtest/gtest.h>
+#include <ostream>
 #include <vector>
 
 using mint = atcoder::modint998244353;
@@ -153,46 +154,63 @@ TEST_F(FormalPowerSeriesTest, LogSamples) {
   check_content(p.log(0), {});
 }
 
+// To reduce duplication between testing `FormalPowerSeries::pow` and
+// `FormalPowerSeries::bin_pow`, we use a value-parameterized test suite.
+struct PowerMethodParam {
+  using power_func_t = std::function<PowerSeries(const PowerSeries &,
+                                                 std::uint64_t, std::size_t)>;
+
+  power_func_t power;
+  std::string name;
+
+  // Required for readable instantiated test names.
+  friend std::ostream &operator<<(std::ostream &os,
+                                  const PowerMethodParam &param) {
+    return os << param.name;
+  }
+};
+
 class FormalPowerSeriesPowerTest
     : public FormalPowerSeriesTest,
-      public ::testing::WithParamInterface<std::function<PowerSeries(
-          const PowerSeries &, std::uint64_t, std::size_t)>> {
+      public ::testing::WithParamInterface<PowerMethodParam> {
 protected:
-  std::function<PowerSeries(const PowerSeries &, std::uint64_t, std::size_t)>
-      power_func;
+  PowerMethodParam::power_func_t power;
 
 public:
-  void SetUp() override { power_func = GetParam(); }
+  void SetUp() override { power = GetParam().power; }
 };
 
 TEST_P(FormalPowerSeriesPowerTest, BinomialSamples) {
   PowerSeries p{1, 1};
-  check_content(power_func(p, 2, 3), {1, 2, 1});
-  check_content(power_func(p, 5, 3), {1, 5, 10});
-  check_content(power_func(p, 2, 0), {});
+  check_content(power(p, 2, 3), {1, 2, 1});
+  check_content(power(p, 5, 3), {1, 5, 10});
+  check_content(power(p, 2, 0), {});
 }
 
 TEST_P(FormalPowerSeriesPowerTest, ZeroPower) {
   PowerSeries p{1, 2, 3};
-  check_content(power_func(p, 0, 3), {1, 0, 0});
+  check_content(power(p, 0, 3), {1, 0, 0});
 }
 
 TEST_P(FormalPowerSeriesPowerTest, LeadingZeroes) {
   PowerSeries p{0, 0, 9, 12};
-  check_content(power_func(p, 1, 5), {0, 0, 9, 12, 0});
-  check_content(power_func(p, 3, 4), {0, 0, 0, 0});
+  check_content(power(p, 1, 5), {0, 0, 9, 12, 0});
+  check_content(power(p, 3, 4), {0, 0, 0, 0});
 }
 
 TEST_P(FormalPowerSeriesPowerTest, ZeroBaseEdgeCases) {
   PowerSeries p{2, 0}, empty;
-  check_content(power_func(p, 0, 3), {1, 0, 0});
-  check_content(power_func(empty, 0, 3), {1, 0, 0});
-  check_content(power_func(empty, 2, 3), {0, 0, 0});
+  check_content(power(p, 0, 3), {1, 0, 0});
+  check_content(power(empty, 0, 3), {1, 0, 0});
+  check_content(power(empty, 2, 3), {0, 0, 0});
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    PowAndBinPow, FormalPowerSeriesPowerTest,
-    ::testing::Values([](const PowerSeries &p, std::uint64_t n,
-                         std::size_t deg) { return p.pow(n, deg); },
-                      [](const PowerSeries &p, std::uint64_t n,
-                         std::size_t deg) { return p.bin_pow(n, deg); }));
+    PowerMethods, FormalPowerSeriesPowerTest,
+    ::testing::Values(
+        PowerMethodParam{[](const PowerSeries &p, std::uint64_t n,
+                            std::size_t deg) { return p.pow(n, deg); },
+                         "Pow"},
+        PowerMethodParam{[](const PowerSeries &p, std::uint64_t n,
+                            std::size_t deg) { return p.bin_pow(n, deg); },
+                         "BinPow"}));
