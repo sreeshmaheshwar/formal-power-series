@@ -1,3 +1,6 @@
 [submodule "ac-library"]
 	path = ac-library
 	url = https://github.com/atcoder/ac-library
+[submodule "test/googletest"]
+	path = test/googletest
+	url = https://github.com/google/googletest
