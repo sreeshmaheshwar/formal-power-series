@@ -10,3 +10,6 @@ combined.cpp
 # Precompiled headers:
 *.gch
 *.pch
+
+# CMake usual build directory:
+/test/build
