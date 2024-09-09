@@ -2,7 +2,6 @@
 #include <atcoder/convolution>
 #include <atcoder/modint>
 #include <cstddef>
-#include <functional>
 #include <gtest/gtest.h>
 #include <vector>
 
