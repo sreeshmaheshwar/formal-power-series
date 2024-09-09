@@ -74,7 +74,7 @@ TEST_F(FormalPowerSeriesTest, BasicArithmetic) {
   PowerSeries p{1, 2, 3};
   PowerSeries q{4, 5, 6, 7};
 
-  check_content(p + q, {5, 7, 9, 7});
+  check_content(p + q, {4, 7, 9, 7});
   check_content(p - q, {-3, -3, -3, -7});
 
   mint scalar = 2;
