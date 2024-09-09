@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <initializer_list>
+#include <iterator>
 #include <type_traits>
 #include <vector>
 
@@ -34,7 +35,8 @@ public:
 
   constexpr FormalPowerSeries(std::vector<ModInt> &&vec) noexcept;
 
-  template <typename Iter> constexpr FormalPowerSeries(Iter first, Iter last);
+  template <std::input_iterator Iter>
+  constexpr FormalPowerSeries(Iter first, Iter last);
 
   constexpr FormalPowerSeries(const FormalPowerSeries &) = default;
 

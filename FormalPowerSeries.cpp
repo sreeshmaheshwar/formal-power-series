@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <ranges>
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(
@@ -29,7 +30,7 @@ constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(
     : Base(std::move(vec)) {}
 
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
-template <typename Iter>
+template <std::input_iterator Iter>
 constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(Iter first,
                                                                     Iter last)
     : Base(first, last) {}
@@ -37,9 +38,7 @@ constexpr FormalPowerSeries<ModInt, Convolution>::FormalPowerSeries(Iter first,
 template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution> &
 FormalPowerSeries<ModInt, Convolution>::operator*=(const ModInt &scalar) {
-  for (auto &x : *this) {
-    x *= scalar;
-  }
+  std::ranges::for_each(*this, [&scalar](auto &x) { x *= scalar; });
   return *this;
 }
 
