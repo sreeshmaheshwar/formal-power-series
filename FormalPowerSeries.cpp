@@ -174,8 +174,8 @@ template <typename ModInt, ConvolutionFunction<ModInt> auto Convolution>
 constexpr FormalPowerSeries<ModInt, Convolution>
 FormalPowerSeries<ModInt, Convolution>::pow(std::uint64_t k,
                                             std::size_t size) const {
-  // We make no assumptions about the FPS, unlike in other methods, as it is
-  // well-defined for any polynomial.
+  // We make no assumptions about the FPS, unlike in other methods, as result
+  // is well-defined for any polynomial.
   //
   // If its constant term were 1, (indeed, as `FormalPowerSeries::log`
   // requires), we may delegate to `log` and `exp`, seeing as P^k(x) = exp(k *

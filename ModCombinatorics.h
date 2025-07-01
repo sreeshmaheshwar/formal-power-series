@@ -10,7 +10,7 @@ template <typename ModInt> struct ModCombinatorics {
   std::vector<ModInt> inverse_facts; // Multiplicative inverses of factorials.
   std::vector<ModInt> inverses;      // Multiplicative inverses.
 
-  /// Computes multiplicative modualr factorials, inverse factorials, and
+  /// Computes multiplicative modular factorials, inverse factorials, and
   /// inverses up to and including `maximum` in 'linear' time (excluding the
   /// cost of computing a stand-alone multiplicative modular inverse directly
   /// via the implementation of `ModInt`).
